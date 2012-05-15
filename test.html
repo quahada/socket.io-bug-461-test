@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<body>
+
+<p>Test of socket.io bug 461</p>
+<p>Refresh page to test</p>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script>
+	var socket = io.connect();
+
+	socket.on("connect", function(){
+	});
+
+	$(function(){
+		$(window).unload(function(){
+			socket.emit("leaving-page");
+			socket.emit("disconnect");
+			alert("disconnect emitted"); // alert doesn't work on chrome, use safari
+	    });
+	});
+</script>
+
+</body>
+</html>
